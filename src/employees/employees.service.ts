@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,38 +7,63 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class EmployeesService {
-  @InjectRepository(Employee)
+  @InjectRepository(Employee) 
   private _EmpleadoRepo:Repository<Employee>;
   
-  async createEmployee(createEmployeeDto: CreateEmployeeDto) {
-    const newEmployee = this._EmpleadoRepo.create(createEmployeeDto)
-    await this._EmpleadoRepo.save(newEmployee)
-    return newEmployee
-
+ async createEmployee(createEmployeeDto: CreateEmployeeDto) {
+  try {
+    const newEmployee = this._EmpleadoRepo.create(createEmployeeDto);
+    await this._EmpleadoRepo.save(newEmployee);
+    return newEmployee;
+  } catch (error) {
+    throw new Error(`Error al crear empleado: ${error.message}`);
   }
+}
 
-  async findAll() {
+async findAll() {
+  try {
     return await this._EmpleadoRepo.find();
+  } catch (error) {
+    throw new Error(`Error al obtener empleados: ${error.message}`);
   }
+}
 
-  async findEmploye(id: number) {
-    const employee = await this._EmpleadoRepo.findOneBy({id});
+async findEmploye(id: number) {
+  try {
+    const employee = await this._EmpleadoRepo.findOneBy({ id });
     if (!employee) {
-      throw new NotFoundException(`empleado con el id${id} no encontrado`);
+      throw new NotFoundException(`Empleado con el id ${id} no encontrado`);
     }
     return employee;
+  } catch (error) {
+    throw new Error(`Error al buscar empleado: ${error.message}`);
   }
+}
 
-  async updateEmploye(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    const employee = await this._EmpleadoRepo.findOneBy({ id })
+async updateEmploye(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+  try {
+    const employee = await this._EmpleadoRepo.findOneBy({ id });
     if (!employee) {
-      throw new NotFoundException(`empleado con el id ${id} no encontrado`);
+      throw new NotFoundException(`Empleado con el id ${id} no encontrado`);
     }
     const updatedEmployee = this._EmpleadoRepo.merge(employee, updateEmployeeDto);
     return await this._EmpleadoRepo.save(updatedEmployee);
+  } catch (error) {
+    throw new Error(`Error al actualizar empleado: ${error.message}`);
   }
+}
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  async remove(id: number) {
+    try {
+      const empoyee = await this._EmpleadoRepo.findOneBy({ id });
+      if (!empoyee) {
+        throw new NotFoundException(`Empleado con el id ${id} no encontrado`);
+      }
+      await this._EmpleadoRepo.remove(empoyee);
+      return { message: `Empleado con el id ${id} eliminado correctamente` };
+    } catch (error) {
+      throw new InternalServerErrorException(`Error al eliminar empleado: ${error}`);
+
+    }
   }
 }

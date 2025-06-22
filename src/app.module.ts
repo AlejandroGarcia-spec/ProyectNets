@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { EmployeesModule } from './employees/employees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DepartamentoModule } from './departamento/departamento.module';
+import { PositionModule } from './position/position.module';
 
 @Module({
   imports: [EmployeesModule,TypeOrmModule.forRoot({
@@ -15,7 +16,7 @@ import { DepartamentoModule } from './departamento/departamento.module';
     database:'employees_db',
     autoLoadEntities: true,
     synchronize: true, // Note: set to false in production
-  }), DepartamentoModule],
+  }), DepartamentoModule, PositionModule],
   controllers: [AppController],
   providers: [AppService],
 })
