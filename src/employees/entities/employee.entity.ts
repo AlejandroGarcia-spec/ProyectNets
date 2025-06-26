@@ -13,7 +13,10 @@ export class Employee {
    
     @Column({unique: true})
     email: string;
-   
+    @Column()
+    password: string;
+    @Column()
+    username: string;
     @Column({default: true})
     status: boolean;
     @CreateDateColumn()

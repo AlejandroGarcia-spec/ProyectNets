@@ -14,6 +14,14 @@ export class UpdateEmployeeDto {
         @IsString()
         @IsNotEmpty()
         apellido: string;
+        @Length(3, 30)
+        @IsString()
+        @IsNotEmpty()
+        password: string;
+        @Length(3, 30)
+        @IsString()
+        @IsNotEmpty()
+        username: string;
     
         @IsNumber()
         @IsNotEmpty()

@@ -22,4 +22,13 @@ export class CreateEmployeeDto {
     @IsNotEmpty()
     @IsNumber()
     position: Position;
+    @Length(3, 30)
+    @IsString()
+    @IsNotEmpty()
+    password: string;
+    @Length(3, 30)
+    @IsString()
+    @IsNotEmpty()
+    username: string;
+    
 }
