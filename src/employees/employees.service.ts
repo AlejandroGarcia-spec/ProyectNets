@@ -22,7 +22,7 @@ export class EmployeesService {
 
 async findAll() {
   try {
-    return await this._EmpleadoRepo.find();
+    return await this._EmpleadoRepo.find({relations:['position']});
   } catch (error) {
     throw new Error(`Error al obtener empleados: ${error.message}`);
   }
@@ -63,7 +63,7 @@ async updateEmploye(id: number, updateEmployeeDto: UpdateEmployeeDto) {
       return { message: `Empleado con el id ${id} eliminado correctamente` };
     } catch (error) {
       throw new InternalServerErrorException(`Error al eliminar empleado: ${error}`);
-
+ 
     }
   }
 }

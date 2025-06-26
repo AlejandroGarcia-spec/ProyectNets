@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Length, Max } from "class-validator";
+import { IsEmail, IsNotEmpty, isNumber, IsNumber, IsString, Length, Max } from "class-validator";
+import { Position } from "src/position/entities/position.entity";
 
 export class CreateEmployeeDto {
     @Length(3, 20)
@@ -9,12 +10,7 @@ export class CreateEmployeeDto {
     @IsString()
     @IsNotEmpty()
     apellido: string;
-    @IsNumber()
-    @IsNotEmpty()
-    sueldo: number;
-    @IsString()
-    @IsNotEmpty()
-    puesto: string;
+
     @IsNumber()
     @IsNotEmpty()
     @Max(100)
@@ -23,4 +19,7 @@ export class CreateEmployeeDto {
     @IsNotEmpty()
     @IsEmail()
     email: string;
+    @IsNotEmpty()
+    @IsNumber()
+    position: Position;
 }

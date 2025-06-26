@@ -8,12 +8,12 @@ import { PositionModule } from './position/position.module';
 
 @Module({
   imports: [EmployeesModule,TypeOrmModule.forRoot({
-    type: 'mysql',
+    type: 'mariadb',
     host: 'localhost',
     port: 3306,
     username: 'root',
     password: '',
-    database:'employees_db',
+    database:'employee_db',
     autoLoadEntities: true,
     synchronize: true, // Note: set to false in production
   }), DepartamentoModule, PositionModule],

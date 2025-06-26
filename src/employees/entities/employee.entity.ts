@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Position } from "src/position/entities/position.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Employee {
@@ -9,14 +10,14 @@ export class Employee {
     @Column()
     apellido: string;
     edad: number;
-    @Column()
-    puesto: string;
+   
     @Column({unique: true})
     email: string;
-    @Column()
-    sueldo: number;
+   
     @Column({default: true})
     status: boolean;
     @CreateDateColumn()
     createdAt: Date;
+    @ManyToOne(()=>Position,(position)=>position.employees)
+    position: Position;
 }
