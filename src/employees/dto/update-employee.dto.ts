@@ -2,33 +2,33 @@
 
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateEmployeeDto } from './create-employee.dto';
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Length, Max } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Max } from 'class-validator';
 import { Position } from 'src/position/entities/position.entity';
 
 export class UpdateEmployeeDto {
         @Length(3, 20)
         @IsString()
-        @IsNotEmpty()
+        @IsOptional()
         nombre: string;
         @Length(3, 30)
         @IsString()
-        @IsNotEmpty()
+        @IsOptional()
         apellido: string;
-        @Length(3, 30)
+        @Length(3, 30) 
         @IsString()
-        @IsNotEmpty()
+        @IsOptional()
         password: string;
         @Length(3, 30)
         @IsString()
-        @IsNotEmpty()
+        @IsOptional()
         username: string;
     
         @IsNumber()
-        @IsNotEmpty()
+        @IsOptional()
         @Max(100)
         edad: number;
         
-        @IsNotEmpty()
+        @IsOptional()
         @IsNumber()
         position: Position;
 }
